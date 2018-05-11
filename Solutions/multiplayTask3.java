@@ -56,7 +56,7 @@ public class multiplayTask3 {
 				stock.founder = "test founder";
 				stock.mission = "some mission statement";
 				
-				System.out.println("Adding object with name " + stock.name + " founder " + stock.founder + "and mission " + stock.mission);
+				System.out.println("Adding object with name " + stock.name + " founder " + stock.founder + " and mission " + stock.mission);
 				stocksList.add(stock);
 			}
 			StockInfo[] stocksArray = stocksList.toArray(new StockInfo[stocksList.size()]);
