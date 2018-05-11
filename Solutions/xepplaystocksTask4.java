@@ -154,8 +154,9 @@ public class xepplaystocksTask4 {
 			{
 				myStatement.setBigDecimal(2, sampleArray[i].purchasePrice);
 				myStatement.setString(3, sampleArray[i].stockName);
-				myStatement.execute();
+				myStatement.addBatch();
 			}
+			myStatement.executeBatch();
 			totalTime = System.currentTimeMillis() - startTime;	
 			System.out.println("Inserted " + sampleArray.length + " item(s) via JDBC successfully.");
 			myStatement.close();

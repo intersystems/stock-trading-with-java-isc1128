@@ -33,7 +33,7 @@ public class nativeplaystocksTask5 {
 			
 			
 			IRIS irisNative = IRIS.createIRIS(dbconnection);
-			System.out.println("on InterSystems IRIS version: "+irisNative.functionString("PrintVersion","^StocksUtil"));
+			System.out.println("on InterSystems IRIS version: " + irisNative.functionString("PrintVersion","^StocksUtil"));
 			
 			boolean always = true;
 			Scanner scanner = new Scanner(System.in);
@@ -57,7 +57,7 @@ public class nativeplaystocksTask5 {
 					Long startPrint = System.currentTimeMillis(); //To calculate execution time
 					PrintNodes(irisNative, "nyse");
 					Long totalPrint = System.currentTimeMillis() - startPrint;
-					System.out.println("Execution time: "+totalPrint+"ms");
+					System.out.println("Execution time: " + totalPrint + "ms");
 					break;
 				case "4":
 					GenerateData(irisNative,10);
@@ -89,7 +89,7 @@ public class nativeplaystocksTask5 {
 		//Write to a test global
 		irisNative.set(8888, "^testglobal", "1");
 		Integer globalValue = irisNative.getInteger("^testglobal", "1");
-		System.out.println("The value of ^testglobal(1) is "+globalValue);
+		System.out.println("The value of ^testglobal(1) is " + globalValue);
 	}
 	public static void StoreStockData(IRIS irisNative, IRISConnection dbconnection)
 	{
@@ -103,15 +103,13 @@ public class nativeplaystocksTask5 {
 			Statement myStatement = dbconnection.createStatement(); //needed for JDBC if doing SQL side-by-side
 
 			ResultSet myRS = myStatement.executeQuery("select top 1000 transdate,name,stockclose,stockopen,high,low,volume from Demo.Stock");
-			int id = 0;
-
+			
 			ArrayList<String> x = new ArrayList<>();
 			while (myRS.next())
 			{
-				id = id+1;
-				x.add("," + myRS.getString("name") + "," + myRS.getDate("transdate") + "," + myRS.getDouble("high") + "," + myRS.getDouble("low") + "," + myRS.getDouble("stockopen") + "," + myRS.getDouble("stockclose") + "," + myRS.getInt("volume"));
-				
+				x.add(String.join(",", myRS.getString("name"), myRS.getString("transdate"), myRS.getString("high"), myRS.getString("low"), myRS.getString("stockopen"), myRS.getString("stockclose"), myRS.getString("volume")));			
 			}
+			int id=x.size();
 			
 			Long startConsume = System.currentTimeMillis();
 			for (int i=0;i<id;i++)
@@ -151,7 +149,7 @@ public class nativeplaystocksTask5 {
 		   {
     		   Date tempDate = Date.valueOf("2018-01-01");
     		   Double tempAmount = irisNative.classMethodDouble("%PopulateUtils", "Currency");
-    		   String tempName = irisNative.classMethodString("%PopulateUtils", "String")+irisNative.classMethodString("%PopulateUtils", "String")+irisNative.classMethodString("%PopulateUtils", "String");
+    		   String tempName = irisNative.classMethodString("%PopulateUtils", "String") + irisNative.classMethodString("%PopulateUtils", "String") + irisNative.classMethodString("%PopulateUtils", "String");
     		   String tempTrader = irisNative.classMethodString("%PopulateUtils", "Name");
     		   int tempShares = new Random().nextInt(20)+1;
     		   data[i] = new Trade(tempName,tempDate,BigDecimal.valueOf(tempAmount),tempShares,tempTrader);

@@ -53,7 +53,7 @@ public class nativeplaystocksTask3 {
 					Long startPrint = System.currentTimeMillis(); //To calculate execution time
 					PrintNodes(irisNative, "nyse");
 					Long totalPrint = System.currentTimeMillis() - startPrint;
-					System.out.println("Execution time: "+totalPrint+"ms");
+					System.out.println("Execution time: " + totalPrint + "ms");
 					break;
 				case "4":
 					System.out.println("Case 4");
@@ -99,15 +99,13 @@ public class nativeplaystocksTask3 {
 			Statement myStatement = dbconnection.createStatement(); //needed for JDBC if doing SQL side-by-side
 
 			ResultSet myRS = myStatement.executeQuery("select top 1000 transdate,name,stockclose,stockopen,high,low,volume from Demo.Stock");
-			int id = 0;
-
+			
 			ArrayList<String> x = new ArrayList<>();
 			while (myRS.next())
 			{
-				id = id+1;
-				x.add("," + myRS.getString("name") + "," + myRS.getDate("transdate") + "," + myRS.getDouble("high") + "," + myRS.getDouble("low") + "," + myRS.getDouble("stockopen") + "," + myRS.getDouble("stockclose") + "," + myRS.getInt("volume"));
-				
+				x.add(String.join(",", myRS.getString("name"), myRS.getString("transdate"), myRS.getString("high"), myRS.getString("low"), myRS.getString("stockopen"), myRS.getString("stockclose"), myRS.getString("volume")));					
 			}
+			int id=x.size();
 			
 			Long startConsume = System.currentTimeMillis();
 			for (int i=0;i<id;i++)
