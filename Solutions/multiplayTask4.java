@@ -56,7 +56,7 @@ public class multiplayTask4 {
 				stock.founder = irisNative.classMethodString("%PopulateUtils", "Name");
 				stock.mission = irisNative.classMethodString("%PopulateUtils", "Mission");
 				
-				System.out.println("Adding object with name " + stock.name + " founder " + stock.founder + "and mission " + stock.mission);
+				System.out.println("Adding object with name " + stock.name + " founder " + stock.founder + " and mission " + stock.mission);
 				stocksList.add(stock);
 			}
 			StockInfo[] stocksArray = stocksList.toArray(new StockInfo[stocksList.size()]);
