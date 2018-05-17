@@ -72,10 +72,10 @@ public class jdbcplaystocksTask5 {
 					UpdateStock(dbconnection,stockName,updatePrice,updateDate, updateShares);
 					break;					
 				case "5":
-					System.out.println("Case 5");
+					System.out.println("TO DO: Delete from Portfolio");
 					break;
 				case "6":
-					System.out.println("Case 6");
+					System.out.println("TO DO: View Portfolio");
 					break;
 				case "7":
 					System.out.println("Exited.");

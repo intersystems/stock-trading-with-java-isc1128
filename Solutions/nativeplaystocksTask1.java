@@ -39,13 +39,13 @@ public class nativeplaystocksTask1 {
 					SetTestGlobal(irisNative);
 					break;
 				case "2":
-					System.out.println("Case 2");
+					System.out.println("TO DO: Stock stock data");
 					break;
 				case "3":
-					System.out.println("Case 3");
+					System.out.println("TO DO: View stock data");
 					break;
 				case "4":
-					System.out.println("Case 4");
+					System.out.println("TO DO: Generate trades");
 					break;
 				case "5":
 					System.out.println("Exited.");

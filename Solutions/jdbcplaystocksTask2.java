@@ -44,19 +44,19 @@ public class jdbcplaystocksTask2 {
 					FindTopOnDate(dbconnection, queryDate);
 					break;
 				case "2":
-					System.out.println("Case 2");
+					System.out.println("TO DO: Create Portfolio table");
 					break;
 				case "3":
-					System.out.println("Case 3");
+					System.out.println("TO DO: Add to Portfolio");
 					break;
 				case "4":
-					System.out.println("Case 4");
+					System.out.println("TO DO: Update Portfolio");
 					break;
 				case "5":
-					System.out.println("Case 5");
+					System.out.println("TO DO: Delete from Portfolio");
 					break;
 				case "6":
-					System.out.println("Case 6");
+					System.out.println("TO DO: View Portfolio");
 					break;
 				case "7":
 					System.out.println("Exited.");

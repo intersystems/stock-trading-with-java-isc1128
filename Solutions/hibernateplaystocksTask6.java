@@ -23,7 +23,7 @@ public class hibernateplaystocksTask6 {
 
 	public static void main(String[] args) {
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-		HibernatePlayStocks driver = new HibernatePlayStocks();
+		hibernateplaystocksTask6 driver = new hibernateplaystocksTask6();
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
@@ -127,7 +127,7 @@ public class hibernateplaystocksTask6 {
 
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
-    		Trade trade = new Trade(stockName, tempDate, price, shares);	
+    		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
     		System.out.println("Trade created");
     		
     		Person trader = new Person(traderFirstName,traderLastName,phone);
@@ -159,7 +159,7 @@ public class hibernateplaystocksTask6 {
     }
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
-    		Trade trade = new Trade(stockName, tempDate, price, shares);	
+    		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
     		System.out.println("Trade created");
     		
     		Session session = sessionFactory.openSession();
