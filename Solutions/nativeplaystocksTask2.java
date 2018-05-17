@@ -48,10 +48,10 @@ public class nativeplaystocksTask2 {
 					StoreStockData(irisNative, dbconnection);
 					break;
 				case "3":
-					System.out.println("Case 3");
+					System.out.println("TO DO: View stock data");
 					break;
 				case "4":
-					System.out.println("Case 4");
+					System.out.println("TO DO: Generate trades");
 					break;
 				case "5":
 					System.out.println("Exited.");

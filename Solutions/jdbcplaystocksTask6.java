@@ -77,7 +77,7 @@ public class jdbcplaystocksTask6 {
 					DeleteStock(dbconnection,removeName);
 					break;
 				case "6":
-					System.out.println("Case 6");
+					System.out.println("TO DO: View Portfolio");
 					break;
 				case "7":
 					System.out.println("Exited.");

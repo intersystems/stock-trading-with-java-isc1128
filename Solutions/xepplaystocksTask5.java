@@ -43,6 +43,7 @@ public class xepplaystocksTask5 {
 				String option = scanner.next();
 				switch (option) {
 				case "1":
+					//Create trade object
 					System.out.print("Stock name: ");
 					String name = scanner.next();
 					
@@ -61,6 +62,7 @@ public class xepplaystocksTask5 {
 					sampleArray = CreateTrade(name,tempDate,price,shares,traderName,sampleArray);
 					break;
 				case "2":
+					//Save trades
 					System.out.println("Saving trades.");
 					XEPSaveTrades(sampleArray, xepEvent);
 					sampleArray = null;

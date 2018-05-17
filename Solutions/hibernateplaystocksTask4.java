@@ -18,12 +18,12 @@ import java.sql.*;
 
 import Demo.Person;
 
-public class hibernateplaystocksTask6 {
+public class hibernateplaystocksTask4 {
 	protected SessionFactory sessionFactory;
 
 	public static void main(String[] args) {
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-		HibernatePlayStocks driver = new HibernatePlayStocks();
+		hibernateplaystocksTask4 driver = new hibernateplaystocksTask4();
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
@@ -91,7 +91,7 @@ public class hibernateplaystocksTask6 {
 				driver.getTraderTrades(personID);
 				break;
 			case "4":
-				System.out.print("TO DO: Find trader by last name.");
+				System.out.println("TO DO: Find trader by last name.");
 				break;
 			case "5":
 				System.out.println("TO DO: Displaying leaderboard.");
@@ -124,7 +124,7 @@ public class hibernateplaystocksTask6 {
 
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
-    		Trade trade = new Trade(stockName, tempDate, price, shares);	
+    		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
     		System.out.println("Trade created");
     		
     		Person trader = new Person(traderFirstName,traderLastName,phone);
@@ -156,7 +156,7 @@ public class hibernateplaystocksTask6 {
     }
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
-    		Trade trade = new Trade(stockName, tempDate, price, shares);	
+    		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
     		System.out.println("Trade created");
     		
     		Session session = sessionFactory.openSession();

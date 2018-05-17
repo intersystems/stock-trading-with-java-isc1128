@@ -56,7 +56,7 @@ public class nativeplaystocksTask3 {
 					System.out.println("Execution time: " + totalPrint + "ms");
 					break;
 				case "4":
-					System.out.println("Case 4");
+					System.out.println("TO DO: Generate trades");
 					break;
 				case "5":
 					System.out.println("Exited.");
