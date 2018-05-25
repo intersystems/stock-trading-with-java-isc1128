@@ -11,7 +11,7 @@ public class Person {
 	private String firstname;
 	private String lastname;
 	private String phone;
-	private List<hibernatePlayStocks.Trade> trades = new ArrayList<>();
+	private List<Demo.Trade2> trades = new ArrayList<>();
 	
 
 	//Constructors
@@ -59,7 +59,7 @@ public class Person {
 		return trades;
 	}
 
-	public void setTrades(List<hibernatePlayStocks.Trade> trades) {
+	public void setTrades(List<Demo.Trade2> trades) {
 		this.trades = trades;
 	}
 
