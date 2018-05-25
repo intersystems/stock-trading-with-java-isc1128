@@ -25,7 +25,7 @@
 		<property name="current_session_context_class">thread</property>
 		
 		<mapping class="Demo.Person"/>
-		<mapping class="Demo.Trade"/>
+		<mapping class="Demo.Trade2"/>
 		<mapping class="Demo.Stock"/>
 	
 		 

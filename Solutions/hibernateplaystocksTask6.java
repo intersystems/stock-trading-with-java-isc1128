@@ -244,7 +244,7 @@ public class hibernateplaystocksTask6 {
     protected void displayLeaderboard(){
     	Session session = sessionFactory.openSession();
     	
-    	String hql = "select top 10 t.trader, sum((s.close-t.purchasePrice)*shares) as gain, " + 
+    	String hql = "select t.trader, sum((s.close-t.purchasePrice)*shares) as gain, " + 
     				"(sum((s.close-t.purchasePrice)*shares)/sum(t.purchasePrice) * 100) as percentIncrease " + 
     				"from Demo.Trade2 as t left join Demo.Stock as s on t.stockName = s.stockName " +
     				"where s.tDate = '2017-08-10' group by t.trader order by gain desc";
