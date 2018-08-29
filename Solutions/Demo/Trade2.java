@@ -18,9 +18,9 @@ public class Trade2 {
 	private Person trader;
 	
 	//Constructors
-	public Trade(){}
+	public Trade2(){}
 	
-	public Trade (String stockName, Date purchaseDate, BigDecimal purchasePrice, int shares) { //, Date transDate
+	public Trade2 (String stockName, Date purchaseDate, BigDecimal purchasePrice, int shares) { //, Date transDate
 		this.stockName = stockName;
 		this.purchaseDate = purchaseDate;
 		this.purchasePrice = purchasePrice;
