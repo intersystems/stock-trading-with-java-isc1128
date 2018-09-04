@@ -55,7 +55,7 @@ public class Person {
 	
 	@JoinColumn (name="trader")
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	public List<hibernatePlayStocks.Trade> getTrades() {
+	public List<Demo.Trade2> getTrades() {
 		return trades;
 	}
 
