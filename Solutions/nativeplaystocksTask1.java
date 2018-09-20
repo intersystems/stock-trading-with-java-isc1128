@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Store test data directly to InterSystems IRIS Data Platform.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running, choose option 1 to store and retrieve test data. The test global should be 1.
+*/
 import java.sql.SQLException;
 import java.util.Scanner;
 

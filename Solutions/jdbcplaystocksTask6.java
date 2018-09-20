@@ -1,3 +1,14 @@
+/*
+* PURPOSE: Delete a portfolio item.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running, 
+* 1. Choose option 1 to see list of stocks.
+* 2. Choose option 2 to create portfolio table.
+* 3. Choose option 3 and add stocks using names from the previous list of stocks.
+* 4. Choose option 5 to delete a portfolio item.
+*/
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

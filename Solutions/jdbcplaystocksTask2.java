@@ -1,3 +1,10 @@
+/*
+* PURPOSE: View top 10 stocks.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+*  When running the application, choose option 1 and try 2016-08-12. 
+*/
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

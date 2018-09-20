@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Create the portfolio table in InterSystems IRIS Data Platform to store your personal stock portfolio information
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running, choose option 2 to create the Portfolio table.
+*/
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
