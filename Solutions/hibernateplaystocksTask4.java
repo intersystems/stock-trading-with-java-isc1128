@@ -1,3 +1,11 @@
+/*
+* PURPOSE: View trader by ID
+*
+* When running the application:
+* 1. Choose option 1 to generate few trades
+* 2. Choose option 3 to view trader based on ID.
+*/
+
 package hibernateplaystocks;
 
 import java.util.List;
@@ -110,7 +118,8 @@ public class hibernateplaystocksTask4 {
         scanner.close();
         driver.exit();
 	}
-	
+
+	// Setup Hibernate
     protected void setup() {
     	final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
     	        .configure() // configures settings from hibernate.cfg.xml
@@ -124,6 +133,7 @@ public class hibernateplaystocksTask4 {
     	}
     }
 
+    // Create new trade with new trader with full name
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -156,6 +166,8 @@ public class hibernateplaystocksTask4 {
         	System.out.println("Error in creation: " + e.getMessage());
         }
     }
+
+    // Create new trade with existing trader with ID
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -190,6 +202,7 @@ public class hibernateplaystocksTask4 {
         }
     }
 
+    // delete all traders and their trades
     protected void deleteAll() {
     	Session session = sessionFactory.openSession();
     	
@@ -205,6 +218,7 @@ public class hibernateplaystocksTask4 {
     	System.out.println("All trades and traders deleted from the database.");
     }
 
+    // get trades by trader ID
     protected void getTraderTrades(long traderID ) {
     	Session session = sessionFactory.openSession();
    	 

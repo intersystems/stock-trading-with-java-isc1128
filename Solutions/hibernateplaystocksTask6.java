@@ -1,3 +1,11 @@
+/*
+* PURPOSE: View the leaderboard of traders based on how much they earned
+*
+* When running the application:
+* 1. Choose option 1 to generate few trades
+* 2. Choose option 5 to calculate the current net worth of each person's portfolio.
+*/
+
 package hibernateplaystocks;
 
 import java.util.List;
@@ -113,7 +121,8 @@ public class hibernateplaystocksTask6 {
         scanner.close();
         driver.exit();
 	}
-	
+
+	// Setup Hibernate
     protected void setup() {
     	final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
     	        .configure() // configures settings from hibernate.cfg.xml
@@ -127,6 +136,7 @@ public class hibernateplaystocksTask6 {
     	}
     }
 
+    // Create new trade with new trader with full name
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -159,6 +169,8 @@ public class hibernateplaystocksTask6 {
         	System.out.println("Error in creation: " + e.getMessage());
         }
     }
+
+    // Create new trade with existing trader with ID
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -193,6 +205,7 @@ public class hibernateplaystocksTask6 {
         }
     }
 
+    // delete all traders and their trades
     protected void deleteAll() {
     	Session session = sessionFactory.openSession();
     	
@@ -208,6 +221,7 @@ public class hibernateplaystocksTask6 {
     	System.out.println("All trades and traders deleted from the database.");
     }
 
+    // get trades by trader ID
     protected void getTraderTrades(long traderID ) {
     	Session session = sessionFactory.openSession();
    	 
@@ -221,6 +235,8 @@ public class hibernateplaystocksTask6 {
         }
         session.close();
     }
+
+    // get traders and their trades by traders' last name
     protected void query(String personName) {
     	Session session = sessionFactory.openSession();
     	String hql = "FROM Demo.Person where lastname = :lastName";
@@ -243,6 +259,8 @@ public class hibernateplaystocksTask6 {
         
         session.close();	
     }
+
+    // View the leaderboard of traders based on how much they earned
     protected void displayLeaderboard(){
     	Session session = sessionFactory.openSession();
     	

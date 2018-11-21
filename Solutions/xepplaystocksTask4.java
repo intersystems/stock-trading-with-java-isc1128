@@ -1,3 +1,14 @@
+/*
+* PURPOSE: Show XEP surpasses JDBC on inserting objects into database
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+* When running the application:
+* 1. Choose option 3 to generate 10000 trades
+* 2. Choose option 5 to generate 10000 trades
+* 3. Compare time of two options
+*/
+
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.math.BigDecimal;
@@ -109,7 +120,8 @@ public class xepplaystocksTask4 {
 			System.out.println("Interactive prompt failed:\n" + e); 
 		}
 	   } // end main()
-	  
+
+	// Create sample and add it to the array
 	public static Trade[] CreateTrade(String stockName, Date tDate, BigDecimal price, int shares, String trader, Trade[] sampleArray)
 	{
 		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader); //
@@ -132,6 +144,8 @@ public class xepplaystocksTask4 {
 		System.out.println("Added " + stockName + " to the array. Contains " + newSize + " trade(s).");
 		return newArray;
 	}
+
+	// Save array of trade into database using xepEvent
 	public static Long XEPSaveTrades(Trade[] sampleArray,Event xepEvent)
 	{
 		Long startTime = System.currentTimeMillis(); //To calculate execution time
@@ -140,6 +154,8 @@ public class xepplaystocksTask4 {
 		System.out.println("Saved " + sampleArray.length + " trade(s).");
 		return totalTime;
 	}
+
+	// Save array of trade into database using JDBC - which is slower than using xepEvent
 	public static Long StoreUsingJDBC(EventPersister persist, Trade[] sampleArray)
 	{
 		Long totalTime = new Long(0);

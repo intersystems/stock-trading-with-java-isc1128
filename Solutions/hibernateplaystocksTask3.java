@@ -1,3 +1,9 @@
+/*
+* PURPOSE: Delete all traders
+*
+* When running the application: Choose option 2 to delete all trades
+*/
+
 package hibernateplaystocks;
 
 import java.util.List;
@@ -107,7 +113,8 @@ public class hibernateplaystocksTask3 {
         scanner.close();
         driver.exit();
 	}
-	
+
+	// Setup Hibernate
     protected void setup() {
     	final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
     	        .configure() // configures settings from hibernate.cfg.xml
@@ -121,6 +128,7 @@ public class hibernateplaystocksTask3 {
     	}
     }
 
+    // Create new trade with new trader with full name
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -153,6 +161,8 @@ public class hibernateplaystocksTask3 {
         	System.out.println("Error in creation: " + e.getMessage());
         }
     }
+
+    // Create new trade with existing trader with ID
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -187,6 +197,7 @@ public class hibernateplaystocksTask3 {
         }
     }
 
+    // delete all traders and their trades
     protected void deleteAll() {
     	Session session = sessionFactory.openSession();
     	

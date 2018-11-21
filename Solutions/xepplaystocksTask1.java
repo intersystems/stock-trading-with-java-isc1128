@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Make connection to InterSystems IRIS using XEP
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+*/
+
 import com.intersystems.xep.*;
 
 import Demo.Trade;

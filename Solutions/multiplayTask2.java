@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Retrieve all stock names from Demo.Stock table using ADO.NET
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+*/
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

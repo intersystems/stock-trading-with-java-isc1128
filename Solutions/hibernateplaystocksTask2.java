@@ -1,3 +1,9 @@
+/*
+* PURPOSE: Generate trade
+*
+* When running the application: Choose option 1 to generate trade
+*/
+
 package hibernateplaystocks;
 
 import java.util.List;
@@ -107,7 +113,8 @@ public class hibernateplaystocksTask2 {
         scanner.close();
         driver.exit();
 	}
-	
+
+	// Setup Hibernate
     protected void setup() {
     	final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
     	        .configure() // configures settings from hibernate.cfg.xml
@@ -121,6 +128,7 @@ public class hibernateplaystocksTask2 {
     	}
     }
 
+    // Create new trade with new trader with full name
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -153,6 +161,8 @@ public class hibernateplaystocksTask2 {
         	System.out.println("Error in creation: " + e.getMessage());
         }
     }
+
+    // Create new trade with existing trader with ID
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	

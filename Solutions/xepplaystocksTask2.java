@@ -1,3 +1,13 @@
+/*
+* PURPOSE: Create some simple trades and save it to database
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+* When running the application:
+* 1. Choose option 1 to generate new trade
+* 2. Choose option 2 to save trades
+*/
+
 import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -92,7 +102,8 @@ public class xepplaystocksTask2 {
 			System.out.println("Interactive prompt failed:\n" + e); 
 		}
 	   } // end main()
-	  
+
+	// Create sample and add it to the array
 	public static Trade[] CreateTrade(String stockName, Date tDate, BigDecimal price, int shares, String trader, Trade[] sampleArray)
 	{
 		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader); //
@@ -115,6 +126,8 @@ public class xepplaystocksTask2 {
 		System.out.println("Added " + stockName + " to the array. Contains " + newSize + " trade(s).");
 		return newArray;
 	}
+
+	// Save array of trade into database using xepEvent
 	public static Long XEPSaveTrades(Trade[] sampleArray,Event xepEvent)
 	{
 		Long startTime = System.currentTimeMillis(); //To calculate execution time

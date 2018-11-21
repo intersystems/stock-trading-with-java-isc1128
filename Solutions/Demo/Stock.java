@@ -1,3 +1,8 @@
+/*
+* PURPOSE: This class is being used by hibernate class to get stock information
+*/
+
+
 package Demo;
 
 import java.math.BigDecimal;

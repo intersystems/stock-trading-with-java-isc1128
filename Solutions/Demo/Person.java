@@ -1,3 +1,7 @@
+/*
+* PURPOSE: This class is being used by hibernate class to generate traders
+*/
+
 package Demo;
 
 import java.util.ArrayList;
