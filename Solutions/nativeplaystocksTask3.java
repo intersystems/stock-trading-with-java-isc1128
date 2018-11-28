@@ -31,7 +31,7 @@ public class nativeplaystocksTask3 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource();
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -62,12 +62,12 @@ public class nativeplaystocksTask3 {
 				case "3":
 					System.out.println("Printing nyse globals...");
 
-					// get current time
+					// Get current time
 					Long startPrint = System.currentTimeMillis();
 
 					PrintNodes(irisNative, "nyse");
 
-					// calculate execution time
+					// Calculate execution time
 					Long totalPrint = System.currentTimeMillis() - startPrint;
 					System.out.println("Execution time: " + totalPrint + "ms");
 					break;
@@ -108,11 +108,11 @@ public class nativeplaystocksTask3 {
 	// Store stock data directly into InterSystems IRIS
 	public static void StoreStockData(IRIS irisNative, IRISConnection dbconnection)
 	{
-		//Clear global from previous runs
+		// Clear global from previous runs
 		irisNative.kill("^nyse");
 		System.out.println("Storing stock data using Native API...");
 		
-		//Get stock data using JDBC and write global
+		// Get stock data using JDBC and write global
 		try {
 			Statement myStatement = dbconnection.createStatement(); //needed for JDBC if doing SQL side-by-side
 			ResultSet myRS = myStatement.executeQuery("select top 1000 transdate,name,stockclose,stockopen,high,low,volume from Demo.Stock");
@@ -125,16 +125,16 @@ public class nativeplaystocksTask3 {
 			}
 			int id=x.size();
 
-			// get start time
+			// Get start time
 			Long startConsume = System.currentTimeMillis();
 
-			// loop through list of stock
+			// Loop through list of stock
 			for (int i=0;i<id;i++)
 			{
 				irisNative.set(x.get(i),"^nyse",i+1);		
 			}
 
-	        // get time consuming
+	        // Get time consuming
 			Long totalConsume = System.currentTimeMillis() - startConsume;
 			System.out.println("Stored natively successfully. Execution time: " + totalConsume + "ms");
 

@@ -1,5 +1,5 @@
 /*
-* PURPOSE: Connect to InterSystems IRIS using XEP
+* PURPOSE: Connect to InterSystems IRIS using XEP. This allow us run Native, JDBC and XEP from this connection
 *
 * NOTES: To use locally, change the IP and port of dbUrl to values for your
 *  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
@@ -29,20 +29,20 @@ public class multiplayTask1 {
 	        xepPersister.importSchema("Demo.StockInfo");   // import flat schema
 	       
 	        //***Initializations***
-	        //Create XEP Event for object access
+	        // Create XEP Event for object access
 	        Event xepEvent = xepPersister.getEvent("Demo.StockInfo");
 
-	        //Create JDBC statement object for SQL and IRIS Native access
+	        // Create JDBC statement object for SQL and IRIS Native access
 	        Statement myStatement = xepPersister.createStatement();
 	        
-	        //Create IRIS Native object
+	        // Create IRIS Native object
 	        IRIS irisNative = IRIS.createIRIS((IRISConnection)xepPersister);
 	        
 	        
 	        //***Future code here***
 	        
 			
-			//Close everything
+			// Close everything
 		    xepEvent.close();
 		    xepPersister.close();
 						

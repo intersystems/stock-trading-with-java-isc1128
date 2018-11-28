@@ -35,7 +35,7 @@ public class hibernateplaystocksTask3 {
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
-      //Starting interactive prompt
+      // Starting interactive prompt
 		boolean active = true;
 		Scanner scanner = new Scanner(System.in);
 		while (active) {
@@ -197,7 +197,7 @@ public class hibernateplaystocksTask3 {
         }
     }
 
-    // delete all traders and their trades
+    // Delete all traders and their trades
     protected void deleteAll() {
     	Session session = sessionFactory.openSession();
     	

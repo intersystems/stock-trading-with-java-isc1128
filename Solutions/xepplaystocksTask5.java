@@ -31,8 +31,8 @@ public class xepplaystocksTask5 {
 	        EventPersister xepPersister = PersisterFactory.createPersister();
 	        xepPersister.connect("127.0.0.1",51773,"USER",user,pass);
 			System.out.println("Connected to InterSystems IRIS.");
-	        xepPersister.deleteExtent("Demo.Trade");   // remove old test data
-	        xepPersister.importSchema("Demo.Trade");   // import flat schema
+	        xepPersister.deleteExtent("Demo.Trade");   // Remove old test data
+	        xepPersister.importSchema("Demo.Trade");   // Import flat schema
 	       
 	        // Create Event
 	        Event xepEvent = xepPersister.getEvent("Demo.Trade");
@@ -53,7 +53,7 @@ public class xepplaystocksTask5 {
 				String option = scanner.next();
 				switch (option) {
 				case "1":
-					//Create trade object
+					// Create trade object
 					System.out.print("Stock name: ");
 					String name = scanner.next();
 					
@@ -72,7 +72,7 @@ public class xepplaystocksTask5 {
 					sampleArray = CreateTrade(name,tempDate,price,shares,traderName,sampleArray);
 					break;
 				case "2":
-					//Save trades
+					// Save trades
 					System.out.println("Saving trades.");
 					XEPSaveTrades(sampleArray, xepEvent);
 					sampleArray = null;
@@ -81,10 +81,10 @@ public class xepplaystocksTask5 {
 					System.out.print("How many items do you want to generate? ");	
 					int number = scanner.nextInt();
 					
-					//Get sample generated array to store
+					// Get sample generated array to store
 					sampleArray = Trade.generateSampleData(number);
 					
-					//Save generated trades
+					// Save generated trades
 					Long totalStore = XEPSaveTrades(sampleArray,xepEvent);
 					System.out.println("Execution time: " + totalStore + "ms");
 					break;
@@ -97,10 +97,10 @@ public class xepplaystocksTask5 {
 					System.out.print("How many items to generate using JDBC? ");
 					int numberJDBC = scanner.nextInt();
 					
-					//Get sample generated array to store
+					// Get sample generated array to store
 					sampleArray = Trade.generateSampleData(numberJDBC);
 					
-					//Save generated trades using JDBC
+					// Save generated trades using JDBC
 					Long totalJDBCStore = StoreUsingJDBC(xepPersister,sampleArray);
 					System.out.println("Execution time: " + totalJDBCStore + "ms");
 					break;
@@ -125,7 +125,7 @@ public class xepplaystocksTask5 {
 	// Create sample and add it to the array
 	public static Trade[] CreateTrade(String stockName, Date tDate, BigDecimal price, int shares, String trader, Trade[] sampleArray)
 	{
-		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader); //
+		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader);
 		System.out.println("New Trade: " + shares + " shares of " + stockName + " purchased on date " + tDate.toString() + " at price " + price + " by " + trader + ".");
 		
 		int currentSize = 0;
@@ -149,7 +149,7 @@ public class xepplaystocksTask5 {
 	// Save array of trade into database using xepEvent
 	public static Long XEPSaveTrades(Trade[] sampleArray,Event xepEvent)
 	{
-		Long startTime = System.currentTimeMillis(); //To calculate execution time
+		Long startTime = System.currentTimeMillis(); // To calculate execution time
 		xepEvent.store(sampleArray);
 		Long totalTime = System.currentTimeMillis() - startTime;
 		System.out.println("Saved " + sampleArray.length + " trade(s).");
@@ -159,7 +159,7 @@ public class xepplaystocksTask5 {
 	// Iterate over all trades
 	public static Long ViewAll(Event xepEvent)
 	{
-		//Create and execute query using EventQuery
+		// Create and execute query using EventQuery
 		String sqlQuery = "SELECT * FROM Demo.Trade WHERE purchaseprice > ? ORDER BY stockname, purchaseDate"; 
 		EventQuery<Trade> xepQuery = xepEvent.createQuery(sqlQuery);
 		xepQuery.setParameter(1,"0");    // find stocks purchased > $0/share (all)
@@ -182,7 +182,7 @@ public class xepplaystocksTask5 {
 	{
 		Long totalTime = new Long(0);
 		
-		//Loop through objects to insert
+		// Loop through objects to insert
 		try {
 			String sql = "INSERT INTO Demo.Trade (purchaseDate,purchaseprice,stockName) VALUES (?,?,?)";
 	

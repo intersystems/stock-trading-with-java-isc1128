@@ -36,7 +36,7 @@ public class nativeplaystocksTask5 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource();
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -69,12 +69,12 @@ public class nativeplaystocksTask5 {
 				case "3":
 					System.out.println("Printing nyse globals...");
 
-					// get current time
+					// Get current time
 					Long startPrint = System.currentTimeMillis();
 
 					PrintNodes(irisNative, "nyse");
 
-					// calculate execution time
+					// Calculate execution time
 					Long totalPrint = System.currentTimeMillis() - startPrint;
 					System.out.println("Execution time: " + totalPrint + "ms");
 					break;
@@ -131,16 +131,16 @@ public class nativeplaystocksTask5 {
 			}
 			int id=x.size();
 
-			// get current time
+			// Get current time
 			Long startConsume = System.currentTimeMillis();
 
-			// loop through list of stock
+			// Loop through list of stock
 			for (int i=0;i<id;i++)
 			{
 				irisNative.set(x.get(i),"^nyse",i+1);		
 			}
 
-	        // get time consuming
+	        // Get time consuming
 			Long totalConsume = System.currentTimeMillis() - startConsume;
 			System.out.println("Stored natively successfully. Execution time: " + totalConsume + "ms");
 
@@ -151,15 +151,15 @@ public class nativeplaystocksTask5 {
 		} 
 	}
 
-	// iterate over all nodes forwards and print
+	// Iterate over all nodes forwards and print
 	public static void PrintNodes(IRIS irisNative, String globalName)
 	{
 		System.out.println("Iterating over " + globalName + " globals");
 		
-		// // Create iter
+		// Create iter
 		IRISIterator iter = irisNative.getIRISIterator(globalName);
 
-		// iterate over all nodes forwards
+		// Iterate over all nodes forwards
 		System.out.println("walk forwards");
 		while (iter.hasNext()) {
 			String subscript = iter.next();
@@ -171,7 +171,7 @@ public class nativeplaystocksTask5 {
 	public static Trade[] GenerateData(IRIS irisNative,Integer objectCount) {
 		Trade[] data = new Trade[objectCount];
     	try{
-    	   // loop through list of trade to generate data for each trade
+    	   // Loop through list of trade to generate data for each trade
     	   for (int i=0;i<objectCount;i++) 
 		   {
     		   Date tempDate = Date.valueOf("2018-01-01");

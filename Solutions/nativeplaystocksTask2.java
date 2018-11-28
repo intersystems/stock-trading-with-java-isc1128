@@ -28,7 +28,7 @@ public class nativeplaystocksTask2 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource();
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -96,7 +96,7 @@ public class nativeplaystocksTask2 {
 	// Store stock data directly into InterSystems IRIS
 	public static void StoreStockData(IRIS irisNative, IRISConnection dbconnection)
 	{
-		//Clear global from previous runs
+		// Clear global from previous runs
 		irisNative.kill("^nyse");
 		System.out.println("Storing stock data using Native API...");
 		
@@ -113,16 +113,16 @@ public class nativeplaystocksTask2 {
 			}
 			int id=x.size();
 
-			// get start time
+			// Get start time
 			Long startConsume = System.currentTimeMillis();
 
-			// loop through list of stock
+			// Loop through list of stock
 			for (int i=0;i<id;i++)
 			{
 				irisNative.set(x.get(i),"^nyse",i+1);		
 			}
 
-	        // get time consuming
+	        // Get time consuming
 			Long totalConsume = System.currentTimeMillis() - startConsume;
 			System.out.println("Stored natively successfully. Execution time: " + totalConsume + "ms");
 

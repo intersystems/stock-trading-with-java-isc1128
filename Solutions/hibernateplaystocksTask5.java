@@ -37,7 +37,7 @@ public class hibernateplaystocksTask5 {
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
-      //Starting interactive prompt
+      // Starting interactive prompt
 		boolean active = true;
 		Scanner scanner = new Scanner(System.in);
 		while (active) {
@@ -204,7 +204,7 @@ public class hibernateplaystocksTask5 {
         }
     }
 
-    // delete all traders and their trades
+    // Delete all traders and their trades
     protected void deleteAll() {
     	Session session = sessionFactory.openSession();
     	
@@ -220,7 +220,7 @@ public class hibernateplaystocksTask5 {
     	System.out.println("All trades and traders deleted from the database.");
     }
 
-    // get trades by trader ID
+    // Get trades by trader ID
     protected void getTraderTrades(long traderID ) {
     	Session session = sessionFactory.openSession();
    	 
@@ -235,7 +235,7 @@ public class hibernateplaystocksTask5 {
         session.close();
     }
 
-    // get traders and their trades by traders' last name
+    // Get traders and their trades by traders' last name
     protected void query(String personName) {
     	Session session = sessionFactory.openSession();
     	String hql = "FROM Demo.Person where lastname = :lastName";
