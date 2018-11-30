@@ -1,3 +1,11 @@
+/*
+* PURPOSE: Store test data directly to InterSystems IRIS Data Platform.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running, choose option 1 to store and retrieve test data. The test global should be 1.
+*/
+
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -14,7 +22,7 @@ public class nativeplaystocksTask1 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource();
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -33,6 +41,7 @@ public class nativeplaystocksTask1 {
 				System.out.println("4. Generate Trades");
 				System.out.println("5. Quit");
 				System.out.print("What would you like to do? ");
+
 				String option = scanner.next();
 				switch (option) {
 				case "1":
@@ -60,7 +69,7 @@ public class nativeplaystocksTask1 {
 			irisNative.close();
 	
 		}
-		catch ( SQLException e) 
+		catch (SQLException e)
 		{ 
 			System.out.println("SQL error in application: " + e.getMessage());
 		} 
@@ -69,9 +78,10 @@ public class nativeplaystocksTask1 {
 			System.out.println("Error - Exception thrown: " + e.getMessage());
 		} 
 	}
+
+	// Write to a test global
 	public static void SetTestGlobal(IRIS irisNative)
 	{
-		//Write to a test global
 		irisNative.set(8888, "^testglobal", "1");
 		Integer globalValue = irisNative.getInteger("^testglobal", "1");
 		System.out.println("The value of ^testglobal(1) is " + globalValue);

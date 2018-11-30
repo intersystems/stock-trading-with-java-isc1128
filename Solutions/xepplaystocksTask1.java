@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Make connection to InterSystems IRIS using XEP
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+*/
+
 import com.intersystems.xep.*;
 
 import Demo.Trade;
@@ -12,8 +19,8 @@ public class xepplaystocksTask1 {
 	        EventPersister xepPersister = PersisterFactory.createPersister();
 	        xepPersister.connect("127.0.0.1",51773,"USER",user,pass);
 			System.out.println("Connected to InterSystems IRIS.");
-	        xepPersister.deleteExtent("Demo.Trade");   // remove old test data
-	        xepPersister.importSchema("Demo.Trade");   // import flat schema
+	        xepPersister.deleteExtent("Demo.Trade");   // Remove old test data
+	        xepPersister.importSchema("Demo.Trade");   // Import flat schema
 	       
 	        // Create Event
 	        Event xepEvent = xepPersister.getEvent("Demo.Trade");

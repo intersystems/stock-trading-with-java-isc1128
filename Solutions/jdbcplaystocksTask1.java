@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Makes a connection to an instance of InterSystems IRIS Data Platform.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+*/
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -11,16 +18,14 @@ public class jdbcplaystocksTask1 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource(); 
 			ds.setURL(dbUrl);
 			ds.setUser(user);
 			ds.setPassword(pass);
 			Connection dbconnection = ds.getConnection();
 			System.out.println("Connected to InterSystems IRIS via JDBC.");
-			
-			
-			//Future code here
+
 			dbconnection.close();
 				
 		}

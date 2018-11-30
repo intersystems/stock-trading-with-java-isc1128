@@ -1,3 +1,11 @@
+/*
+* PURPOSE: View all traders by last name
+*
+* When running the application:
+* 1. Choose option 1 to generate few trades
+* 2. Choose option 4 to view all traders and their trades based on their last name.
+*/
+
 package hibernateplaystocks;
 
 import java.util.List;
@@ -29,7 +37,7 @@ public class hibernateplaystocksTask5 {
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
-      //Starting interactive prompt
+      // Starting interactive prompt
 		boolean active = true;
 		Scanner scanner = new Scanner(System.in);
 		while (active) {
@@ -112,7 +120,8 @@ public class hibernateplaystocksTask5 {
         scanner.close();
         driver.exit();
 	}
-	
+
+	// Setup Hibernate
     protected void setup() {
     	final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
     	        .configure() // configures settings from hibernate.cfg.xml
@@ -126,6 +135,7 @@ public class hibernateplaystocksTask5 {
     	}
     }
 
+    // Create new trade with new trader with full name
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares,String traderFirstName,String traderLastName, String phone) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -158,6 +168,8 @@ public class hibernateplaystocksTask5 {
         	System.out.println("Error in creation: " + e.getMessage());
         }
     }
+
+    // Create new trade with existing trader with ID
     protected void create(String stockName,Date tempDate,BigDecimal price,int shares, Long traderID) {
     	try {
     		Demo.Trade2 trade = new Demo.Trade2(stockName, tempDate, price, shares);	
@@ -192,6 +204,7 @@ public class hibernateplaystocksTask5 {
         }
     }
 
+    // Delete all traders and their trades
     protected void deleteAll() {
     	Session session = sessionFactory.openSession();
     	
@@ -207,6 +220,7 @@ public class hibernateplaystocksTask5 {
     	System.out.println("All trades and traders deleted from the database.");
     }
 
+    // Get trades by trader ID
     protected void getTraderTrades(long traderID ) {
     	Session session = sessionFactory.openSession();
    	 
@@ -220,6 +234,8 @@ public class hibernateplaystocksTask5 {
         }
         session.close();
     }
+
+    // Get traders and their trades by traders' last name
     protected void query(String personName) {
     	Session session = sessionFactory.openSession();
     	String hql = "FROM Demo.Person where lastname = :lastName";

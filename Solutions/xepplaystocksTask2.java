@@ -1,3 +1,13 @@
+/*
+* PURPOSE: Create some simple trades and save it to database
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+* When running the application:
+* 1. Choose option 1 to generate new trade
+* 2. Choose option 2 to save trades
+*/
+
 import java.sql.SQLException;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -20,8 +30,8 @@ public class xepplaystocksTask2 {
 	        EventPersister xepPersister = PersisterFactory.createPersister();
 	        xepPersister.connect("127.0.0.1",51773,"USER",user,pass);
 			System.out.println("Connected to InterSystems IRIS.");
-	        xepPersister.deleteExtent("Demo.Trade");   // remove old test data
-	        xepPersister.importSchema("Demo.Trade");   // import flat schema
+	        xepPersister.deleteExtent("Demo.Trade");   // Remove old test data
+	        xepPersister.importSchema("Demo.Trade");   // Import flat schema
 	       
 	        // Create Event
 	        Event xepEvent = xepPersister.getEvent("Demo.Trade");
@@ -92,10 +102,11 @@ public class xepplaystocksTask2 {
 			System.out.println("Interactive prompt failed:\n" + e); 
 		}
 	   } // end main()
-	  
+
+	// Create sample and add it to the array
 	public static Trade[] CreateTrade(String stockName, Date tDate, BigDecimal price, int shares, String trader, Trade[] sampleArray)
 	{
-		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader); //
+		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader);
 		System.out.println("New Trade: " + shares + " shares of " + stockName + " purchased on date " + tDate.toString() + " at price " + price + " by " + trader + ".");
 		
 		int currentSize = 0;
@@ -115,9 +126,11 @@ public class xepplaystocksTask2 {
 		System.out.println("Added " + stockName + " to the array. Contains " + newSize + " trade(s).");
 		return newArray;
 	}
+
+	// Save array of trade into database using xepEvent
 	public static Long XEPSaveTrades(Trade[] sampleArray,Event xepEvent)
 	{
-		Long startTime = System.currentTimeMillis(); //To calculate execution time
+		Long startTime = System.currentTimeMillis(); // To calculate execution time
 		xepEvent.store(sampleArray);
 		Long totalTime = System.currentTimeMillis() - startTime;
 		System.out.println("Saved " + sampleArray.length + " trade(s).");

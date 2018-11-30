@@ -1,3 +1,10 @@
+/*
+* PURPOSE: Create StockInfo objects that can be manipulated
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+*/
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,24 +34,24 @@ public class multiplayTask3 {
 	        xepPersister.importSchema("Demo.StockInfo");   // import flat schema
 	       
 	        //***Initializations***
-	        //Create XEP Event for object access
+	        // Create XEP Event for object access
 	        Event xepEvent = xepPersister.getEvent("Demo.StockInfo");
 
-	        //Create JDBC statement object for SQL and IRIS Native access
+	        // Create JDBC statement object for SQL and IRIS Native access
 	        Statement myStatement = xepPersister.createStatement();
 	        
-	        //Create IRIS Native object
+	        // Create IRIS Native object
 	        IRIS irisNative = IRIS.createIRIS((IRISConnection)xepPersister);
 	        
 	        
 	        //***Running code***
 	        System.out.println("Generating stock info table...");
 			
-			//Get stock names (JDBC)
+			// Get stock names (JDBC)
 			ResultSet myRS = myStatement.executeQuery("SELECT distinct name FROM demo.stock");
 			
 												
-			//Create java objects and store to database (XEP)
+			// Create java objects and store to database (XEP)
 			ArrayList<StockInfo> stocksList = new ArrayList<StockInfo>();
 			while(myRS.next())
 			{
@@ -63,7 +70,7 @@ public class multiplayTask3 {
 			
 			xepEvent.store(stocksArray);
 					
-			//Close everything
+			// Close everything
 		    xepEvent.close();
 		    xepPersister.close();
 						

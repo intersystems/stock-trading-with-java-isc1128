@@ -1,3 +1,11 @@
+/*
+* PURPOSE: Create the portfolio table in InterSystems IRIS Data Platform to store your personal stock portfolio information
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running, choose option 2 to create the Portfolio table.
+*/
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +25,7 @@ public class jdbcplaystocksTask3 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource(); 
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -37,6 +45,7 @@ public class jdbcplaystocksTask3 {
 				System.out.println("6. View Portfolio");
 				System.out.println("7. Quit");
 				System.out.print("What would you like to do? ");
+
 				String option = scanner.next();
 				switch (option) {
 				case "1":
@@ -77,9 +86,10 @@ public class jdbcplaystocksTask3 {
 			System.out.println(e.getMessage());
 		} 
 	}
+
+    // Find top 10 stocks on a particular date
 	public static void FindTopOnDate(Connection dbconnection, String onDate)
 	{
-		//Find top 10 stocks on a particular date
 		try 
 		{
 			String sql = "SELECT distinct top 10 transdate,name,stockclose,stockopen,high,low,volume FROM Demo.Stock WHERE transdate= ? ORDER BY stockclose desc";
@@ -106,6 +116,8 @@ public class jdbcplaystocksTask3 {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	// Create portfolio table
 	public static void CreatePortfolioTable(Connection dbconnection) 
 	{
 		String createTable = "CREATE TABLE Demo.Portfolio(Name varchar(50) unique, PurchaseDate date, PurchasePrice numeric(10,4), Shares int, DateTimeUpdated datetime)";

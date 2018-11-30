@@ -1,3 +1,14 @@
+/*
+* PURPOSE: Simulate adding stocks to your stock portfolio and see how you would have done.
+* 
+* NOTES: To use locally, change the IP and port of dbUrl to values for your 
+*  instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running the application,
+* 1. Choose option 1 to view top 10 stocks.
+* 2. Choose option 3 to add 2 or 3 stocks to your portfolio (using names from top 10 and 2016-08-12).
+* 3. Choose option 6 using date 2017-08-10 to view your % Gain or Loss after a year.
+*/
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
@@ -19,7 +30,7 @@ public class jdbcplaystocksTask7 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource(); 
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -39,6 +50,7 @@ public class jdbcplaystocksTask7 {
 				System.out.println("6. View Portfolio");
 				System.out.println("7. Quit");
 				System.out.print("What would you like to do? ");
+
 				String option = scanner.next();
 				switch (option) {
 				case "1":
@@ -99,9 +111,10 @@ public class jdbcplaystocksTask7 {
 			System.out.println(e.getMessage());
 		} 
 	}
+
+	// Find top 10 stocks on a particular date
 	public static void FindTopOnDate(Connection dbconnection, String onDate)
 	{
-		//Find top 10 stocks on a particular date
 		try 
 		{
 			String sql = "SELECT distinct top 10 transdate,name,stockclose,stockopen,high,low,volume FROM Demo.Stock WHERE transdate= ? ORDER BY stockclose desc";
@@ -128,6 +141,8 @@ public class jdbcplaystocksTask7 {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	// Create portfolio table
 	public static void CreatePortfolioTable(Connection dbconnection) 
 	{
 		String createTable = "CREATE TABLE Demo.Portfolio(Name varchar(50) unique, PurchaseDate date, PurchasePrice numeric(10,4), Shares int, DateTimeUpdated datetime)";
@@ -142,11 +157,13 @@ public class jdbcplaystocksTask7 {
 			System.out.println("Table not created and likely already exists.");
 			e.getMessage();
 		}
-	}	
+	}
+
+	// Add item to portfolio
 	public static void AddPortfolioItem (Connection dbconnection, String name, String purchaseDate, String price, int shares)
 	{
+	    // get current time
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		
 		try 
 		{
 			String sql = "INSERT INTO Demo.Portfolio (name,PurchaseDate,PurchasePrice,Shares,DateTimeUpdated) VALUES (?,?,?,?,?)";
@@ -172,10 +189,13 @@ public class jdbcplaystocksTask7 {
 			}
 		}
 	}
+
+	// Update item in portfolio
 	public static void UpdateStock(Connection dbconnection, String stockname, String price, String transDate, int shares)
 	{
 		try 
 		{
+		    // get current time
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			String sql = "UPDATE Demo.Portfolio SET purchaseDate = ?, purchasePrice= ?, shares = ?, DateTimeUpdated= ? WHERE name= ?";
 			PreparedStatement myStatement = dbconnection.prepareStatement(sql);
@@ -201,6 +221,8 @@ public class jdbcplaystocksTask7 {
 			System.out.println("Error updating " + stockname + " : " + e.getMessage());
 		}
 	}
+
+	// Delete item from portfolio
 	public static void DeleteStock(Connection dbconnection, String stockname)
 	{
 		try 
@@ -209,6 +231,7 @@ public class jdbcplaystocksTask7 {
 			PreparedStatement myStatement =  dbconnection.prepareStatement(sql);
 			myStatement.setString(1, stockname);
 			myStatement.execute();
+
 			int count = myStatement.getUpdateCount();
 			if (count > 0)
 			{
@@ -224,6 +247,8 @@ public class jdbcplaystocksTask7 {
 			System.out.println("Error deleting stock: " + e.getMessage());
 		}
 	}
+
+	// View your portfolio to know % Gain or Loss
 	public static void PortfolioProfile(Connection dbconnection, String sellDate)
 	{
 		BigDecimal cumulStartValue = new BigDecimal(0);
@@ -234,7 +259,9 @@ public class jdbcplaystocksTask7 {
 			PreparedStatement myStatement = dbconnection.prepareStatement(sql);
 			myStatement.setString(1,sellDate);
 			ResultSet myStocksRS = myStatement.executeQuery();
+
 			System.out.println("Name\tPurchase Date\tPurchase Price\tStock Close\tShares\tDatetime Updated\t% Change\tGain or Loss");
+
 			while (myStocksRS.next())
 			{
 				String name = myStocksRS.getString("name");
@@ -243,13 +270,16 @@ public class jdbcplaystocksTask7 {
 				BigDecimal stockClose = myStocksRS.getBigDecimal("stockclose");
 				int shares = myStocksRS.getInt("shares");
 				Timestamp dateTimeUpdated = myStocksRS.getTimestamp("dateTimeUpdated");
+
 				BigDecimal percentChange = stockClose.subtract(purchasePrice).divide(purchasePrice, 4).multiply(new BigDecimal(100));
 				BigDecimal startValue = purchasePrice.multiply(BigDecimal.valueOf(shares));
 				BigDecimal endValue = stockClose.multiply(BigDecimal.valueOf(shares));
 				BigDecimal gainOrLoss = endValue.subtract(startValue).setScale(2, RoundingMode.HALF_UP);
+
 				cumulStartValue = cumulStartValue.add(startValue);
 				cumulEndValue = cumulEndValue.add(endValue);
-				System.out.println(name + "\t" + purchaseDate + "\t" + purchasePrice + "\t" + stockClose + "\t" + shares + "\t" 
+
+				System.out.println(name + "\t" + purchaseDate + "\t" + purchasePrice + "\t" + stockClose + "\t" + shares + "\t"
 						+ dateTimeUpdated + "\t" + percentChange + "\t" + gainOrLoss);
 			}
 		} 

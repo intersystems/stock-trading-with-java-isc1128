@@ -1,3 +1,15 @@
+/*
+* PURPOSE: Update portfolio item.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+* When running, 
+* 1. Choose option 1 to see list of stocks.
+* 2. Choose option 2 to create portfolio table.
+* 3. Choose option 3 and add stocks using names from the previous list of stocks.
+* 4. Choose option 4 and update one of your portfolio items.
+*/
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +30,7 @@ public class jdbcplaystocksTask5 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource(); 
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -38,6 +50,7 @@ public class jdbcplaystocksTask5 {
 				System.out.println("6. View Portfolio");
 				System.out.println("7. Quit");
 				System.out.print("What would you like to do? ");
+
 				String option = scanner.next();
 				switch (option) {
 				case "1":
@@ -94,10 +107,11 @@ public class jdbcplaystocksTask5 {
 			System.out.println(e.getMessage());
 		} 
 	}
+
+	// Find top 10 stocks on a particular date
 	public static void FindTopOnDate(Connection dbconnection, String onDate)
 	{
-		//Find top 10 stocks on a particular date
-		try 
+		try
 		{
 			String sql = "SELECT distinct top 10 transdate,name,stockclose,stockopen,high,low,volume FROM Demo.Stock WHERE transdate= ? ORDER BY stockclose desc";
 			PreparedStatement myStatement = dbconnection.prepareStatement(sql);
@@ -123,6 +137,8 @@ public class jdbcplaystocksTask5 {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	// Create portfolio table
 	public static void CreatePortfolioTable(Connection dbconnection) 
 	{
 		String createTable = "CREATE TABLE Demo.Portfolio(Name varchar(50) unique, PurchaseDate date, PurchasePrice numeric(10,4), Shares int, DateTimeUpdated datetime)";
@@ -137,11 +153,13 @@ public class jdbcplaystocksTask5 {
 			System.out.println("Table not created and likely already exists.");
 			e.getMessage();
 		}
-	}	
+	}
+
+	// Add item to portfolio
 	public static void AddPortfolioItem (Connection dbconnection, String name, String purchaseDate, String price, int shares)
 	{
+	    // Get current time
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-		
 		try 
 		{
 			String sql = "INSERT INTO Demo.Portfolio (name,PurchaseDate,PurchasePrice,Shares,DateTimeUpdated) VALUES (?,?,?,?,?)";
@@ -167,6 +185,8 @@ public class jdbcplaystocksTask5 {
 			}
 		}
 	}
+
+	// Update item in portfolio
 	public static void UpdateStock(Connection dbconnection, String stockname, String price, String transDate, int shares)
 	{
 		try 

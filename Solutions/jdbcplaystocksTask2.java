@@ -1,3 +1,11 @@
+/*
+* PURPOSE: View top 10 stocks.
+* 
+* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
+*  your instance: jdbc:IRIS://YourIP:YourPort/USER
+*  When running the application, choose option 1 and try 2016-08-12. 
+*/
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +24,7 @@ public class jdbcplaystocksTask2 {
 		String pass = "SYS";
 		
 		try {
-			//Making connection
+			// Making connection
 			IRISDataSource ds = new IRISDataSource(); 
 			ds.setURL(dbUrl);
 			ds.setUser(user);
@@ -36,6 +44,7 @@ public class jdbcplaystocksTask2 {
 				System.out.println("6. View Portfolio");
 				System.out.println("7. Quit");
 				System.out.print("What would you like to do? ");
+
 				String option = scanner.next();
 				switch (option) {
 				case "1":
@@ -75,9 +84,10 @@ public class jdbcplaystocksTask2 {
 			System.out.println(e.getMessage());
 		} 
 	}
+
+	//Find top 10 stocks on a particular date
 	public static void FindTopOnDate(Connection dbconnection, String onDate)
 	{
-		//Find top 10 stocks on a particular date
 		try 
 		{
 			String sql = "SELECT distinct top 10 transdate,name,stockclose,stockopen,high,low,volume FROM Demo.Stock WHERE transdate= ? ORDER BY stockclose desc";

@@ -1,3 +1,13 @@
+/*
+* PURPOSE: Update all stock with NYSE preface
+*
+* NOTES: To use locally, change the IP and port of dbUrl to values for your
+*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
+* When running the application:
+* 1. Choose option 3 to generate 10000 trades
+* 2. Choose option 4 to view all trades with updated name
+*/
+
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.math.BigDecimal;
@@ -21,8 +31,8 @@ public class xepplaystocksTask6 {
 	        EventPersister xepPersister = PersisterFactory.createPersister();
 	        xepPersister.connect("127.0.0.1",51773,"USER",user,pass);
 			System.out.println("Connected to InterSystems IRIS.");
-	        xepPersister.deleteExtent("Demo.Trade");   // remove old test data
-	        xepPersister.importSchema("Demo.Trade");   // import flat schema
+	        xepPersister.deleteExtent("Demo.Trade");   // Remove old test data
+	        xepPersister.importSchema("Demo.Trade");   // Import flat schema
 	       
 	        // Create Event
 	        Event xepEvent = xepPersister.getEvent("Demo.Trade");
@@ -43,7 +53,7 @@ public class xepplaystocksTask6 {
 				String option = scanner.next();
 				switch (option) {
 				case "1":
-					//Create trade object
+					// Create trade object
 					System.out.print("Stock name: ");
 					String name = scanner.next();
 					
@@ -62,7 +72,7 @@ public class xepplaystocksTask6 {
 					sampleArray = CreateTrade(name,tempDate,price,shares,traderName,sampleArray);
 					break;
 				case "2":
-					//Save trades
+					// Save trades
 					System.out.println("Saving trades.");
 					XEPSaveTrades(sampleArray, xepEvent);
 					sampleArray = null;
@@ -71,10 +81,10 @@ public class xepplaystocksTask6 {
 					System.out.print("How many items do you want to generate? ");	
 					int number = scanner.nextInt();
 					
-					//Get sample generated array to store
+					// Get sample generated array to store
 					sampleArray = Trade.generateSampleData(number);
 					
-					//Save generated trades
+					// Save generated trades
 					Long totalStore = XEPSaveTrades(sampleArray,xepEvent);
 					System.out.println("Execution time: " + totalStore + "ms");
 					break;
@@ -87,10 +97,10 @@ public class xepplaystocksTask6 {
 					System.out.print("How many items to generate using JDBC? ");
 					int numberJDBC = scanner.nextInt();
 					
-					//Get sample generated array to store
+					// Get sample generated array to store
 					sampleArray = Trade.generateSampleData(numberJDBC);
 					
-					//Save generated trades using JDBC
+					// Save generated trades using JDBC
 					Long totalJDBCStore = StoreUsingJDBC(xepPersister,sampleArray);
 					System.out.println("Execution time: " + totalJDBCStore + "ms");
 					break;
@@ -111,10 +121,11 @@ public class xepplaystocksTask6 {
 			System.out.println("Interactive prompt failed:\n" + e); 
 		}
 	   } // end main()
-	  
+
+	// Create sample and add it to the array
 	public static Trade[] CreateTrade(String stockName, Date tDate, BigDecimal price, int shares, String trader, Trade[] sampleArray)
 	{
-		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader); //
+		Trade sampleObject = new Trade(stockName,tDate,price,shares,trader);
 		System.out.println("New Trade: " + shares + " shares of " + stockName + " purchased on date " + tDate.toString() + " at price " + price + " by " + trader + ".");
 		
 		int currentSize = 0;
@@ -134,14 +145,18 @@ public class xepplaystocksTask6 {
 		System.out.println("Added " + stockName + " to the array. Contains " + newSize + " trade(s).");
 		return newArray;
 	}
+
+	// Save array of trade into database using xepEvent
 	public static Long XEPSaveTrades(Trade[] sampleArray,Event xepEvent)
 	{
-		Long startTime = System.currentTimeMillis(); //To calculate execution time
+		Long startTime = System.currentTimeMillis(); // To calculate execution time
 		xepEvent.store(sampleArray);
 		Long totalTime = System.currentTimeMillis() - startTime;
 		System.out.println("Saved " + sampleArray.length + " trade(s).");
 		return totalTime;
 	}
+
+	// Iterate over all trades
 	public static Long ViewAll(Event xepEvent)
 	{
 		//Create and execute query using EventQuery
@@ -163,18 +178,22 @@ public class xepplaystocksTask6 {
 		xepQuery.close();
 		return totalTime;
 	}
+
+	// Save array of trade into database using JDBC - which is slower than using xepEvent
 	public static Long StoreUsingJDBC(EventPersister persist, Trade[] sampleArray)
 	{
 		Long totalTime = new Long(0);
 		
-		//Loop through objects to insert
+		// Loop through objects to insert
 		try {
 			String sql = "INSERT INTO Demo.Trade (purchaseDate,purchaseprice,stockName) VALUES (?,?,?)";
 	
 			PreparedStatement myStatement = persist.prepareStatement(sql);
 			myStatement.setString(1, "2016-08-12");
-			
+
+			// Get current time
 			Long startTime = System.currentTimeMillis();
+
 			for (int i=0; i < sampleArray.length; i++)
 			{
 				myStatement.setBigDecimal(2, sampleArray[i].purchasePrice);
@@ -182,6 +201,8 @@ public class xepplaystocksTask6 {
 				myStatement.addBatch();
 			}
 			myStatement.executeBatch();
+
+			// Get time consuming
 			totalTime = System.currentTimeMillis() - startTime;	
 			System.out.println("Inserted " + sampleArray.length + " item(s) via JDBC successfully.");
 			myStatement.close();
