@@ -1,0 +1,6 @@
+protocol: jdbc:IRIS://
+host: localhost
+port: 51773
+namespace: user
+username: superuser
+password: SYS
