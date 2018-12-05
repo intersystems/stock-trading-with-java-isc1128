@@ -43,7 +43,7 @@ public class nativeplaystocksTask1 {
 			IRISDataSource ds = new IRISDataSource();
 
 			// Create connection string
-			String dbUrl = host + ":" + port + "/" + namespace;
+			String dbUrl = protocol + host + ":" + port + "/" + namespace;
 			ds.setURL(dbUrl);
 			ds.setUser(username);
 			ds.setPassword(password);
