@@ -1,19 +1,22 @@
 /*
 * PURPOSE: Store stock data directly to InterSystems IRIS Data Platform using a custom structure.
 * 
-* NOTES: To use locally, make sure to change the IP and port of dbUrl to values for
-*  your instance: jdbc:IRIS://YourIP:YourPort/USER
-* When running, 
+* NOTES: When running,
 * 1. Choose option 2 to store stock data natively.
 * 2. Choose option 3 to retrieve stock data natively.
 */
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.math.BigDecimal;
-import java.sql.ResultSet;
+import java.util.HashMap;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import com.intersystems.jdbc.IRISConnection;
 import com.intersystems.jdbc.IRIS;
@@ -26,16 +29,32 @@ import com.intersystems.jdbc.IRISDataSource;
 public class nativeplaystocksTask3 {
 
 	public static void main(String[] args) {
-		String dbUrl = "jdbc:IRIS://127.0.0.1:51773/USER";
-		String user = "SuperUser";
-		String pass = "SYS";
+		// Initialize map to store connection details from config.txt
+	    HashMap<String, String> map = new HashMap<String, String>();
+		try{
+			map = getConfig("config.txt");
+		}
+		catch (IOException e){
+			System.out.println(e.getMessage());
+		}
+
+		// Retrieve connection information
+		String host = map.get("host");
+		String port = map.get("port");
+		String namespace = map.get("namespace");
+		String username = map.get("username");
+		String password = map.get("password");
 		
 		try {
-			// Making connection
+			// Using IRISDataSource to connect
 			IRISDataSource ds = new IRISDataSource();
+
+		    // Create connection string
 			ds.setURL(dbUrl);
-			ds.setUser(user);
-			ds.setPassword(pass);
+			ds.setUser(username);
+			ds.setPassword(password);
+
+			// Making connection
 			IRISConnection dbconnection = (IRISConnection) ds.getConnection();
 			System.out.println("Connected to InterSystems IRIS via JDBC.");
 					
@@ -160,5 +179,35 @@ public class nativeplaystocksTask3 {
 			System.out.println("subscript=" + subscript + ", value=" + iter.getValue());
 		} 
 	}
-		
+
+	// Helper method: Get connection details from config file
+	public static HashMap<String, String> getConfig(String filename) throws FileNotFoundException, IOException{
+        // Initial empty map to store connection details
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        String line;
+
+        // Using Buffered Reader to read file
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+        while ((line = reader.readLine()) != null)
+        {
+            // Remove all spaces and split line based on first colon
+            String[] parts = line.replaceAll("\\s+","").split(":", 2);
+
+            // Check if line contains enough information
+            if (parts.length >= 2)
+            {
+                String key = parts[0];
+                String value = parts[1];
+                map.put(key, value);
+            } else {
+                System.out.println("Ignoring line: " + line);
+            }
+        }
+
+        reader.close();
+
+        return map;
+    }
 }
