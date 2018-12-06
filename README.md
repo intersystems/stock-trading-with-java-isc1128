@@ -1,6 +1,6 @@
 # stock-trading-with-java-isc1128
 Summary: This sample Java code is for course ISC1128 - Stock Trading with Java. 
-For access to this course, register and login at [learning.intersystems.com](learning.intersystems.com) and 
+For access to this course, register and login at [learning.intersystems.com](https://learning.intersystems.com/) and 
 then navigate to the course page: [Stock Trading with Java](https://learning.intersystems.com/course/view.php?name=Java%20Financial%20Play)
 
 First, open `config.txt` file and modify the `host` and `password` to be the correct values for your InterSystems IRIS instance. 
