@@ -19,11 +19,24 @@ import com.intersystems.xep.*;
 import Demo.Trade;
 
 public class xepplaystocksTask3 {
-	  public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
+        // Initialize map to store connection details from config.txt
+        HashMap<String, String> map = new HashMap<String, String>();
+        try{
+            map = getConfig("config.txt");
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+
+        // Retrieve connection information from configuration file
+        String host = map.get("host");
+        int port = Integer.parseInt(map.get("port"));
+        String namespace = map.get("namespace");
+        String username = map.get("username");
+        String password = map.get("password");
+
 	    try {
-			String user = "SuperUser";
-			String pass = "SYS";
-	    	
 	    	// Initialize sampleArray to hold Trade items
 	    	Trade[] sampleArray = null;
 	    	
@@ -76,8 +89,13 @@ public class xepplaystocksTask3 {
 					break;
 				case "2":
 					//Save trades
-					System.out.println("Saving trades.");
-					XEPSaveTrades(sampleArray, xepEvent);
+					System.out.println("Saving trades...");
+		            if(sampleArray != null){
+		                XEPSaveTrades(sampleArray, xepEvent);
+		            }
+		            else{
+		            	System.out.println("There is no new trade to save");
+		            }
 					sampleArray = null;
 					break;
 				case "3":

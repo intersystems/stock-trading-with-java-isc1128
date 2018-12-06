@@ -1,7 +1,7 @@
 /*
 * PURPOSE: Store test data directly to InterSystems IRIS Data Platform.
 *
-* NOTES: When running, choose option 1 to store and retrieve test data. The test global should be 1.
+* NOTES: When running, choose option 1 to store and retrieve test data. The test global should be 8888.
 */
 
 import java.sql.SQLException;
@@ -28,15 +28,13 @@ public class nativeplaystocksTask1 {
 			System.out.println(e.getMessage());
 		}
 
-		// Retrieve connection information
+		// Retrieve connection information from configuration file
+		String protocol = "jdbc:IRIS://";
 		String host = map.get("host");
-		String port = map.get("port");
+		int port = Integer.parseInt(map.get("port"));
 		String namespace = map.get("namespace");
 		String username = map.get("username");
 		String password = map.get("password");
-		String dbUrl = "jdbc:IRIS://127.0.0.1:51773/USER";
-		String user = "SuperUser";
-		String pass = "SYS";
 		
 		try {
 			// Using IRISDataSource to connect

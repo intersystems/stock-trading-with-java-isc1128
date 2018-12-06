@@ -31,10 +31,10 @@ public class jdbcplaystocksTask2 {
 			System.out.println(e.getMessage());
 		}
 
-		// Retrieve connection information
-		String protocol = map.get("protocol");
+		// Retrieve connection information from configuration file
+		String protocol = "jdbc:IRIS://";
 		String host = map.get("host");
-		String port = map.get("port");
+		int port = Integer.parseInt(map.get("port"));
 		String namespace = map.get("namespace");
 		String username = map.get("username");
 		String password = map.get("password");

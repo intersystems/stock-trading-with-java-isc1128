@@ -22,14 +22,12 @@ import java.io.FileNotFoundException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-
 import com.intersystems.jdbc.IRISConnection;
 import com.intersystems.jdbc.IRIS;
 import com.intersystems.jdbc.IRISIterator;
+import com.intersystems.jdbc.IRISDataSource;
 
 import Demo.Trade;
-
-import com.intersystems.jdbc.IRISDataSource;
 
 public class nativeplaystocksTask4 {
 
@@ -43,9 +41,10 @@ public class nativeplaystocksTask4 {
 			System.out.println(e.getMessage());
 		}
 
-		// Retrieve connection information
+		// Retrieve connection information from configuration file
+		String protocol = "jdbc:IRIS://";
 		String host = map.get("host");
-		String port = map.get("port");
+		int port = Integer.parseInt(map.get("port"));
 		String namespace = map.get("namespace");
 		String username = map.get("username");
 		String password = map.get("password");
@@ -60,7 +59,7 @@ public class nativeplaystocksTask4 {
 			ds.setUser(username);
 			ds.setPassword(password);
 
-			/ Making connection
+			// Making connection
 			IRISConnection dbconnection = (IRISConnection) ds.getConnection();
 			System.out.println("Connected to InterSystems IRIS via JDBC.");
 					

@@ -30,7 +30,7 @@ public class multiplayTask1 {
 
 		// Retrieve connection information
 		String host = map.get("host");
-		String port = map.get("port");
+		int port = Integer.parseInt(map.get("port"));
 		String namespace = map.get("namespace");
 		String username = map.get("username");
 		String password = map.get("password");

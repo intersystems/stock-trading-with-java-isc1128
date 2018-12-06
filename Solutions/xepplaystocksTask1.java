@@ -10,8 +10,6 @@ import java.io.FileReader;
 
 import com.intersystems.xep.*;
 
-import Demo.Trade;
-
 public class xepplaystocksTask1 {
     public static void main(String[] args) throws Exception {
         // Initialize map to store connection details from config.txt
@@ -23,15 +21,13 @@ public class xepplaystocksTask1 {
             System.out.println(e.getMessage());
         }
 
-        // Retrieve connection information
+        // Retrieve connection information from configuration file
         String host = map.get("host");
-        String port = map.get("port");
+        int port = Integer.parseInt(map.get("port"));
         String namespace = map.get("namespace");
         String username = map.get("username");
         String password = map.get("password");
-        String dbUrl = "jdbc:IRIS://127.0.0.1:51773/USER";
-        String user = "SuperUser";
-        String pass = "SYS";
+
 	    try {
             // Connect to database using EventPersister, which is based on IRISDataSource
 	        EventPersister xepPersister = PersisterFactory.createPersister();

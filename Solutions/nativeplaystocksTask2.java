@@ -17,10 +17,6 @@ import java.io.FileReader;
 
 import com.intersystems.jdbc.IRISConnection;
 import com.intersystems.jdbc.IRIS;
-import com.intersystems.jdbc.IRISIterator;
-
-import Demo.Trade;
-
 import com.intersystems.jdbc.IRISDataSource;
 
 public class nativeplaystocksTask2 {
@@ -35,9 +31,10 @@ public class nativeplaystocksTask2 {
 			System.out.println(e.getMessage());
 		}
 
-		// Retrieve connection information
+		// Retrieve connection information from configuration file
+		String protocol = "jdbc:IRIS://";
 		String host = map.get("host");
-		String port = map.get("port");
+		int port = Integer.parseInt(map.get("port"));
 		String namespace = map.get("namespace");
 		String username = map.get("username");
 		String password = map.get("password");
