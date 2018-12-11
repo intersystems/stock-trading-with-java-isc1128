@@ -37,7 +37,7 @@ public class hibernateplaystocksTask4 {
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
-      // Starting interactive prompt
+        // Starting interactive prompt
 		boolean active = true;
 		Scanner scanner = new Scanner(System.in);
 		while (active) {

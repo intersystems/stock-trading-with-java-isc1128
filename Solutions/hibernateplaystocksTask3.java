@@ -1,7 +1,7 @@
 /*
-* PURPOSE: Delete all traders
+* PURPOSE: Delete all traders and trades
 *
-* When running the application: Choose option 2 to delete all trades
+* When running the application: Choose option 2 to delete all traders and trades
 */
 
 package hibernateplaystocks;
@@ -35,7 +35,7 @@ public class hibernateplaystocksTask3 {
         driver.setup();
         System.out.println("Connected to InterSystems IRIS.");
         
-      // Starting interactive prompt
+        // Starting interactive prompt
 		boolean active = true;
 		Scanner scanner = new Scanner(System.in);
 		while (active) {

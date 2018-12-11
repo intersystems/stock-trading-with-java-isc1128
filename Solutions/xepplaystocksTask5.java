@@ -1,36 +1,55 @@
 /*
 * PURPOSE: Query all stock from database
 *
-* NOTES: To use locally, change the IP and port of dbUrl to values for your
-*  instance: xepPersister.connect("YourIP",YourPort,"USER",user,pass);
-* When running the application:
+* NOTES: When running the application:
 * 1. Choose option 3 to generate 10000 trades
 * 2. Choose option 4 to view all trades
 */
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Scanner;
+import java.util.HashMap;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import com.intersystems.xep.*;
 
 import Demo.Trade;
 
 public class xepplaystocksTask5 {
-	  public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
+	    // Initialize map to store connection details from config.txt
+        HashMap<String, String> map = new HashMap<String, String>();
+        try{
+            map = getConfig("config.txt");
+        }
+        catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+
+        // Retrieve connection information from configuration file
+        String host = map.get("host");
+        int port = Integer.parseInt(map.get("port"));
+        String namespace = map.get("namespace");
+        String username = map.get("username");
+        String password = map.get("password");
+
 	    try {
-			String user = "SuperUser";
-			String pass = "SYS";
-	    	
 	    	// Initialize sampleArray to hold Trade items
 	    	Trade[] sampleArray = null;
 	    	
-	    	// Connect to database using EventPersister
+	    	// Connect to database using EventPersister, which is based on IRISDataSource
 	        EventPersister xepPersister = PersisterFactory.createPersister();
-	        xepPersister.connect("127.0.0.1",51773,"USER",user,pass);
+
+	        // Connecting to database
+	        xepPersister.connect(host,port,namespace,username,password);
 			System.out.println("Connected to InterSystems IRIS.");
+
 	        xepPersister.deleteExtent("Demo.Trade");   // Remove old test data
 	        xepPersister.importSchema("Demo.Trade");   // Import flat schema
 	       
@@ -73,8 +92,13 @@ public class xepplaystocksTask5 {
 					break;
 				case "2":
 					// Save trades
-					System.out.println("Saving trades.");
-					XEPSaveTrades(sampleArray, xepEvent);
+					System.out.println("Saving trades...");
+		            if(sampleArray != null){
+		                XEPSaveTrades(sampleArray, xepEvent);
+		            }
+		            else{
+		            	System.out.println("There is no new trade to save");
+		            }
 					sampleArray = null;
 					break;
 				case "3":
@@ -206,5 +230,36 @@ public class xepplaystocksTask5 {
 		}
 		return totalTime;
 	}
+
+	// Helper method: Get connection details from config file
+	public static HashMap<String, String> getConfig(String filename) throws FileNotFoundException, IOException{
+        // Initial empty map to store connection details
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        String line;
+
+        // Using Buffered Reader to read file
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+        while ((line = reader.readLine()) != null)
+        {
+            // Remove all spaces and split line based on first colon
+            String[] parts = line.replaceAll("\\s+","").split(":", 2);
+
+            // Check if line contains enough information
+            if (parts.length >= 2)
+            {
+                String key = parts[0];
+                String value = parts[1];
+                map.put(key, value);
+            } else {
+                System.out.println("Ignoring line: " + line);
+            }
+        }
+
+        reader.close();
+
+        return map;
+    }
 
 } 
